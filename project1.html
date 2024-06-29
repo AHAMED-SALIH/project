@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendation App</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color:rgb(229, 240, 229);
+        }
+        
+        header {
+            background-color:black;
+            color:white;
+            text-align: center;
+        }
+        
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color:rgb(105, 64, 52);
+            border-radius: 5px;
+        }
+        
+        .search-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .search-container input[type=text] {
+            padding: 10px;
+            width: 60%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        .search-container button {
+            padding: 10px 20px;
+            background-color:violet;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .search-container button:hover {
+            background-color:brown;
+        }
+        
+        .movie-item {
+            border: 1px red;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .movie-item h2 {
+            margin-top: 0;
+        }
+        
+        .movie-item p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Movie Recommendation App</h1>
+    </header>
+    <main>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search movies...">
+            <button onclick="searchMovies()">Search</button>
+        </div>
+        <div id="movieList">
+            
+        </div>
+    </main>
+
+    <script>
+        
+        const movies = [
+            { title: 'RATHANAM', genre: 'Action', year: 2024, rating: 8.5 },
+            { title: 'DD RETUNS', genre: 'Comedy', year: 2023, rating: 7.8 },
+            { title: 'RRR', genre: 'Drama', year: 2022, rating: 9.0 },
+            { title: 'VIKRAM',genre: 'Action', year: 2023, rating: 9.2}
+            
+        ];
+
+        
+        function searchMovies() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const filteredMovies = movies.filter(movie =>
+                movie.title.toLowerCase().includes(searchInput) ||
+                movie.genre.toLowerCase().includes(searchInput) ||
+                movie.year.toString().includes(searchInput) ||
+                movie.rating.toString().includes(searchInput)
+            );
+
+            displayMovies(filteredMovies);
+        }
+
+        
+        function displayMovies(movieArray) {
+            const movieListContainer = document.getElementById('movieList');
+            movieListContainer.innerHTML = '';
+
+            movieArray.forEach(movie => {
+                const movieItem = document.createElement('div');
+                movieItem.classList.add('movie-item');
+                movieItem.innerHTML = `
+                    <h2>${movie.title} (${movie.year})</h2>
+                    <p><strong>Genre:</strong> ${movie.genre}</p>
+                    <p><strong>Rating:</strong> ${movie.rating}</p>
+                `;
+                movieListContainer.appendChild(movieItem);
+            });
+        }
+        displayMovies(movies);
+    </script>
+</body>
+</html>
+
